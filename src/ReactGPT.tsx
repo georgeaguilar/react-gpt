@@ -1,3 +1,6 @@
+import { RouterProvider } from "react-router";
+import { router } from "./presentation/router/router";
+
 export const ReactGPT = () => {
-  return <h1 className="fade-in text-xl font-thin underline">ReactGPT</h1>;
+  return <RouterProvider router={router} />;
 };
