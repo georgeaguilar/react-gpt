@@ -1,24 +1,32 @@
 import { useState, type FormEvent } from "react";
 
 interface Props {
-  onSendMessage: (message: string) => void;
+  onSendMessage: (message: string, selectOption: string) => void;
   placeHolder?: string;
   disableCorrections?: boolean;
+  options: Option[];
 }
 
-export const TextMessageBox = ({
+interface Option {
+  id: string;
+  text: string;
+}
+
+export const TextMessageBoxSelect = ({
   onSendMessage,
   placeHolder,
   disableCorrections = false,
+  options,
 }: Props) => {
   const [message, setMessage] = useState("");
+  const [selectOption, setSelectOption] = useState<string>("");
 
   const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (message.trim().length === 0) return;
 
-    onSendMessage(message);
+    onSendMessage(message, selectOption);
     setMessage("");
   };
 
@@ -28,12 +36,12 @@ export const TextMessageBox = ({
       className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4"
     >
       <div className="grow">
-        <div className="relative w-full">
+        <div className="flex">
           <input
             type="text"
             autoFocus
             name="message"
-            className="flex w-full rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10"
+            className="w-full rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10"
             placeholder={placeHolder}
             autoComplete={disableCorrections ? "on" : "off"}
             autoCorrect={disableCorrections ? "on" : "off"}
@@ -41,6 +49,20 @@ export const TextMessageBox = ({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
+
+          <select
+            name="select"
+            className="w-2/5 ml-5 border rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10"
+            value={selectOption}
+            onChange={(e) => setSelectOption(e.target.value)}
+          >
+            <option value="">Select</option>
+            {options.map(({ id, text }) => (
+              <option key={id} value={id}>
+                {text}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 

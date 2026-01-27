@@ -10,7 +10,7 @@ interface Props {
 export const TextMessageBoxFile = ({
   onSendMessage,
   placeHolder,
-  disableCorrections,
+  disableCorrections = false,
   accept,
 }: Props) => {
   const [message, setMessage] = useState("");
