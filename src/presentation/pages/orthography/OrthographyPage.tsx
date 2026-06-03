@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { GptMessage, MyMessage, TypingLoader } from "../../components";
+import {
+  GptMessage,
+  MyMessage,
+  TextMessageBox,
+  TypingLoader,
+} from "../../components";
+import { orthographyUseCase } from "../../../core/use-cases";
 
 interface Message {
   text: string;
@@ -13,6 +19,10 @@ export const OrthographyPage = () => {
   const handlePost = async (text: string) => {
     setIsLoading(true);
     setMessage((prev) => [...prev, { text: text, isGpt: false }]);
+
+    const data = await orthographyUseCase(text);
+
+    console.log(data);
 
     setIsLoading(false);
   };
@@ -37,6 +47,12 @@ export const OrthographyPage = () => {
           )}
         </div>
       </div>
+
+      <TextMessageBox
+        onSendMessage={handlePost}
+        placeholder="Escribe aquí lo que deseas"
+        disableCorrections
+      />
     </div>
   );
 };
