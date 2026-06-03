@@ -2,13 +2,13 @@ import { useState, type FormEvent } from "react";
 
 interface Props {
   onSendMessage: (message: string) => void;
-  placeHolder?: string;
+  placeholder?: string;
   disableCorrections?: boolean;
 }
 
 export const TextMessageBox = ({
   onSendMessage,
-  placeHolder,
+  placeholder,
   disableCorrections = false,
 }: Props) => {
   const [message, setMessage] = useState("");
@@ -34,7 +34,7 @@ export const TextMessageBox = ({
             autoFocus
             name="message"
             className="flex w-full rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10"
-            placeholder={placeHolder}
+            placeholder={placeholder}
             autoComplete={disableCorrections ? "on" : "off"}
             autoCorrect={disableCorrections ? "on" : "off"}
             spellCheck={disableCorrections ? "true" : "false"}
